@@ -216,6 +216,14 @@ start() {
 	echo "use_encryption=true" >>$tmpconf
 	echo "use_compression=true" >>$tmpconf
 	
+	echo "[R2S Super Clash]" >>$tmpconf
+	echo "type=http" >>$tmpconf
+	echo "custom_domains=r2ssuperclash.frp.super27034.top" >>$tmpconf
+	echo "local_ip=192.168.5.1" >>$tmpconf
+	echo "local_port=9091" >>$tmpconf
+	echo "use_encryption=true" >>$tmpconf
+	echo "use_compression=true" >>$tmpconf
+	
 	config_load "frp"
 	frp_write_bool tcp_mux common 1
 	frp_write_bool login_fail_exit common 1
