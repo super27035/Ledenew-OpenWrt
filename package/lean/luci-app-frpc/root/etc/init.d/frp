@@ -198,13 +198,24 @@ start() {
 	local tmpconf="/var/etc/frp/frpc.conf"
 
 	echo "[common]" >$tmpconf
-	echo "superus.super27034.top=${server_addr}" >>$tmpconf
-	echo "7000=${server_port}" >>$tmpconf
-	echo "12345=${token}" >>$tmpconf
-	echo "info=${log_level}" >>$tmpconf
-	echo "3=${log_max_days}" >>$tmpconf
-	echo "tcp=${protocol}" >>$tmpconf
-	echo "/dev/null=$LOGFILE" >>$tmpconf
+	echo "server_addr=superus.super27034.top" >>$tmpconf
+	echo "server_port=7000" >>$tmpconf
+	echo "token=12345" >>$tmpconf
+	echo "log_level=info" >>$tmpconf
+	echo "log_max_days=3" >>$tmpconf
+	echo "protocol=tcp" >>$tmpconf
+	echo "log_file=/var/etc/frp/frpc.log" >>$tmpconf
+	echo "tcp_mux=true" >$tmpconf
+	echo "login_fail_exit=false" >>$tmpconf
+	
+	echo "[R2S Super]" >>$tmpconf
+	echo "type=http" >>$tmpconf
+	echo "custom_domains=r2ssuper.frp.super27034.top" >>$tmpconf
+	echo "local_ip=192.168.5.1" >>$tmpconf
+	echo "local_port=80" >>$tmpconf
+	echo "use_encryption=true" >>$tmpconf
+	echo "use_compression=true" >>$tmpconf
+	
 	[ -n "$http_proxy" ] && echo "http_proxy=$http_proxy" >>$tmpconf
 	[ -n "$pool_count" ] && echo "pool_count=$pool_count" >>$tmpconf
 
