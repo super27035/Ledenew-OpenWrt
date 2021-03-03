@@ -198,13 +198,13 @@ start() {
 	local tmpconf="/var/etc/frp/frpc.conf"
 
 	echo "[common]" >$tmpconf
-	echo "server_addr=${server_addr}" >>$tmpconf
-	echo "server_port=${server_port}" >>$tmpconf
-	echo "token=${token}" >>$tmpconf
-	echo "log_level=${log_level}" >>$tmpconf
-	echo "log_max_days=${log_max_days}" >>$tmpconf
-	echo "protocol=${protocol}" >>$tmpconf
-	echo "log_file=$LOGFILE" >>$tmpconf
+	echo "superus.super27034.top=${server_addr}" >>$tmpconf
+	echo "7000=${server_port}" >>$tmpconf
+	echo "12345=${token}" >>$tmpconf
+	echo "info=${log_level}" >>$tmpconf
+	echo "3=${log_max_days}" >>$tmpconf
+	echo "tcp=${protocol}" >>$tmpconf
+	echo "/dev/null=$LOGFILE" >>$tmpconf
 	[ -n "$http_proxy" ] && echo "http_proxy=$http_proxy" >>$tmpconf
 	[ -n "$pool_count" ] && echo "pool_count=$pool_count" >>$tmpconf
 
