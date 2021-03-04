@@ -207,6 +207,11 @@ start() {
 	echo "log_file=/var/etc/frp/frpc.log" >>$tmpconf
 	echo "tcp_mux=true" >$tmpconf
 	echo "login_fail_exit=false" >>$tmpconf
+	frp_write_bool tcp_mux common 1
+	frp_write_bool login_fail_exit common 1
+	
+	[ -n "$http_proxy" ] && echo "http_proxy=$http_proxy" >>$tmpconf
+	[ -n "$pool_count" ] && echo "pool_count=$pool_count" >>$tmpconf
 	
 	echo "[R2S Super]" >>$tmpconf
 	echo "type=http" >>$tmpconf
@@ -224,12 +229,7 @@ start() {
 	echo "use_encryption=true" >>$tmpconf
 	echo "use_compression=true" >>$tmpconf
 	
-	[ -n "$http_proxy" ] && echo "http_proxy=$http_proxy" >>$tmpconf
-	[ -n "$pool_count" ] && echo "pool_count=$pool_count" >>$tmpconf
-	
 	config_load "frp"
-	frp_write_bool tcp_mux common 1
-	frp_write_bool login_fail_exit common 1
 	config_foreach conf_proxy_add proxy "$tmpconf"
 
 	[ "$(cat "$tmpconf" | grep -c "type=")" -gt 0 ] || (echo_date "frp服务启动失败，请首先添加服务列表！" && exit 0)
