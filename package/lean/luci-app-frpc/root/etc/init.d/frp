@@ -224,6 +224,9 @@ start() {
 	echo "use_encryption=true" >>$tmpconf
 	echo "use_compression=true" >>$tmpconf
 	
+	[ -n "$http_proxy" ] && echo "http_proxy=$http_proxy" >>$tmpconf
+	[ -n "$pool_count" ] && echo "pool_count=$pool_count" >>$tmpconf
+	
 	config_load "frp"
 	frp_write_bool tcp_mux common 1
 	frp_write_bool login_fail_exit common 1
