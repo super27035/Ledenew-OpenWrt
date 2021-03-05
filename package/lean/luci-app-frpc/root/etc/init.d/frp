@@ -198,38 +198,19 @@ start() {
 	local tmpconf="/var/etc/frp/frpc.conf"
 
 	echo "[common]" >$tmpconf
-	echo "server_addr=superus.super27034.top" >>$tmpconf
-	echo "server_port=7000" >>$tmpconf
-	echo "token=12345" >>$tmpconf
-	echo "log_level=info" >>$tmpconf
-	echo "log_max_days=3" >>$tmpconf
-	echo "protocol=tcp" >>$tmpconf
-	echo "log_file=/var/etc/frp/frpc.log" >>$tmpconf
-	echo "tcp_mux=true" >$tmpconf
-	echo "login_fail_exit=false" >>$tmpconf
-	frp_write_bool tcp_mux common 1
-	frp_write_bool login_fail_exit common 1
-	
+	echo "server_addr=${server_addr}" >>$tmpconf
+	echo "server_port=${server_port}" >>$tmpconf
+	echo "token=${token}" >>$tmpconf
+	echo "log_level=${log_level}" >>$tmpconf
+	echo "log_max_days=${log_max_days}" >>$tmpconf
+	echo "protocol=${protocol}" >>$tmpconf
+	echo "log_file=$LOGFILE" >>$tmpconf
 	[ -n "$http_proxy" ] && echo "http_proxy=$http_proxy" >>$tmpconf
 	[ -n "$pool_count" ] && echo "pool_count=$pool_count" >>$tmpconf
-	
-	echo "[R2S Super]" >>$tmpconf
-	echo "type=http" >>$tmpconf
-	echo "custom_domains=r2ssuper.frp.super27034.top" >>$tmpconf
-	echo "local_ip=192.168.5.1" >>$tmpconf
-	echo "local_port=80" >>$tmpconf
-	echo "use_encryption=true" >>$tmpconf
-	echo "use_compression=true" >>$tmpconf
-	
-	echo "[R2S Super Clash]" >>$tmpconf
-	echo "type=http" >>$tmpconf
-	echo "custom_domains=r2ssuperclash.frp.super27034.top" >>$tmpconf
-	echo "local_ip=192.168.5.1" >>$tmpconf
-	echo "local_port=9091" >>$tmpconf
-	echo "use_encryption=true" >>$tmpconf
-	echo "use_compression=true" >>$tmpconf
-	
+
 	config_load "frp"
+	frp_write_bool tcp_mux common 1
+	frp_write_bool login_fail_exit common 1
 	config_foreach conf_proxy_add proxy "$tmpconf"
 
 	[ "$(cat "$tmpconf" | grep -c "type=")" -gt 0 ] || (echo_date "frp服务启动失败，请首先添加服务列表！" && exit 0)
