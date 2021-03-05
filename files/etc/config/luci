@@ -14,7 +14,7 @@ config extern 'flash_keep'
 	option uploads '/lib/uci/upload/'
 
 config internal 'languages'
-	option zh_cn '简体中文 (Simplified Chinese)'
+	option en 'auto'
 
 config internal 'sauth'
 	option sessionpath '/tmp/luci-sessions'
